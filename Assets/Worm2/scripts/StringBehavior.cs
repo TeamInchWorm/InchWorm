@@ -4,16 +4,16 @@ using System.Collections;
 public class StringBehavior : MonoBehaviour {
 
 	private bool rightPressed, leftPressed;
-	private bool leftReleasing, rightReleasing;
+	//private bool leftReleasing, rightReleasing;
 	
-	//public float rightReduceRate, leftReduceRate;
+	public float reduceRate, reduceScale;
+
 	public float initialLen;
 	public float rightLen, leftLen;
 
-	public Transform leftBody, rightBody; 
+	public Transform leftObj, rightObj; 
 
 	private float rightTimeHeld, leftTimeHeld, timeReleased;
-
 	private float prevLen;
 	
 	//void OnMouseDrag()
@@ -27,8 +27,6 @@ public class StringBehavior : MonoBehaviour {
 	}
 		
 	void Update () {
-
-
 		if(Input.GetAxis("Horizontal") > 0) { // Right
 			if(!rightPressed) {
 				rightTimeHeld = Time.time;
@@ -38,10 +36,9 @@ public class StringBehavior : MonoBehaviour {
 
 			if(initialLen != rightLen)
 				transform.localScale = new Vector3(transform.localScale.x, 
-				                                   Mathf.Lerp (prevLen, rightLen, horizAsymptote((Time.time - rightTimeHeld) * Mathf.Sqrt(rightBody.localPosition.y + 3f) / 1f, .6f)), 
+				                                   Mathf.Lerp (prevLen, rightLen, horizAsymptote((Time.time - rightTimeHeld) * Mathf.Sqrt(rightObj.localPosition.y + leftObj.localPosition.y + 4f) / reduceScale, reduceRate)), 
 				                                   transform.localScale.z);
 		}
-
 		else if(Input.GetAxis ("Horizontal") < 0) { // Left
 			if(!leftPressed) {
 				leftTimeHeld = Time.time;
@@ -51,10 +48,9 @@ public class StringBehavior : MonoBehaviour {
 
 			if(initialLen != leftLen)
 				transform.localScale = new Vector3(transform.localScale.x, 
-				                                   Mathf.Lerp (prevLen, leftLen, horizAsymptote((Time.time - leftTimeHeld) * Mathf.Sqrt(leftBody.localPosition.y + 3f) / 1f, .6f)),
+				                                   Mathf.Lerp (prevLen, leftLen, horizAsymptote((Time.time - leftTimeHeld) * Mathf.Sqrt(leftObj.localPosition.y + leftObj.localPosition.y + 4f) / reduceScale, reduceRate)),
 				                                   transform.localScale.z);
 		}
-
 		else {
 			if(leftPressed || rightPressed) {
 				timeReleased = Time.time;
@@ -64,9 +60,8 @@ public class StringBehavior : MonoBehaviour {
 			leftPressed = rightPressed = false;
 
 			transform.localScale = new Vector3(transform.localScale.x, 
-			                                   Mathf.Lerp (prevLen, initialLen, (Time.time - timeReleased) * 1f), 
+			                                   Mathf.Lerp (prevLen, initialLen, (Time.time - timeReleased) * 2f), 
 			                                   transform.localScale.z);
-
 		}
 
 	}

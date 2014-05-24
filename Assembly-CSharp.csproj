@@ -51,9 +51,9 @@
      <Compile Include="Assets\Misc\FollowCamera.cs" />
      <Compile Include="Assets\Misc\Singleton.cs" />
      <Compile Include="Assets\Worm2\scripts\StringBehavior.cs" />
+     <Compile Include="Assets\Worm2\scripts\WormHeadBehavior.cs" />
      <Compile Include="Assets\Worm2\scripts\WormTailBehavior.cs" />
      <Compile Include="Assets\Worm2\scripts\drawBezierCurve.cs" />
-     <Compile Include="Assets\Worm2\scripts\wormHeadBehavior.cs" />
      <Compile Include="Assets\midfeatures\FeatureManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

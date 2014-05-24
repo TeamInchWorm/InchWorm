@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class wormHeadBehavior : MonoBehaviour
+public class WormHeadBehavior : MonoBehaviour
 {
 
 	public static float distanceTraveled;
@@ -9,15 +9,11 @@ public class wormHeadBehavior : MonoBehaviour
 	private bool touchingSurface;
 	
 	public Vector2 jumpVelocity;
-
-    //void OnMouseDrag()
-    //{
-    //    transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
-    //}
+	//public Transform opposite;
 	
 	void Update () {
 		if(Input.GetAxis("Horizontal") > 0) { // Right
-			rigidbody2D.AddForce(jumpVelocity / (transform.localPosition.y + 3f) * 3f);
+			rigidbody2D.AddForce(jumpVelocity / (transform.localPosition.y /*+ opposite.localPosition.y*/ + 3f) * 3f);
 
 			rigidbody2D.fixedAngle = false; //allow to rotate when lifting head - effectively less friction
 		}

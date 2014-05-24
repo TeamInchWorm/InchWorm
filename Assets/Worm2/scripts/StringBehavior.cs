@@ -2,11 +2,10 @@ using UnityEngine;
 using System.Collections;
 
 public class StringBehavior : MonoBehaviour {
-
-	private bool rightPressed, leftPressed;
-	//private bool leftReleasing, rightReleasing;
 	
-	public float reduceRate, reduceScale;
+	public static float reductionLimit = .55f;
+	public static float reduceScale = .75f;
+	public static float returnRate = 2f;
 
 	public float initialLen;
 	public float rightLen, leftLen;
@@ -14,6 +13,9 @@ public class StringBehavior : MonoBehaviour {
 	public Transform leftObj, rightObj; 
 
 	private float rightTimeHeld, leftTimeHeld, timeReleased;
+	private bool rightPressed, leftPressed;
+	//private bool leftReleasing, rightReleasing;
+
 	private float prevLen;
 	
 	//void OnMouseDrag()
@@ -27,7 +29,7 @@ public class StringBehavior : MonoBehaviour {
 	}
 		
 	void Update () {
-		if(Input.GetAxis("Horizontal") > 0) { // Right
+		if (Input.GetAxis("Horizontal") > 0) { // Right
 			if(!rightPressed) {
 				rightTimeHeld = Time.time;
 				prevLen = transform.localScale.y;
@@ -36,32 +38,33 @@ public class StringBehavior : MonoBehaviour {
 
 			if(initialLen != rightLen)
 				transform.localScale = new Vector3(transform.localScale.x, 
-				                                   Mathf.Lerp (prevLen, rightLen, horizAsymptote((Time.time - rightTimeHeld) * Mathf.Sqrt(rightObj.localPosition.y + leftObj.localPosition.y + 4f) / reduceScale, reduceRate)), 
+				                                   Mathf.Lerp (prevLen, rightLen, horizAsymptote ( (Time.time - rightTimeHeld) * Mathf.Sqrt (rightObj.localPosition.y + leftObj.localPosition.y + 4f) / reduceScale, reductionLimit)), 
 				                                   transform.localScale.z);
 		}
-		else if(Input.GetAxis ("Horizontal") < 0) { // Left
-			if(!leftPressed) {
+		else if (Input.GetAxis ("Horizontal") < 0) { // Left
+			if (!leftPressed) {
 				leftTimeHeld = Time.time;
 				prevLen = transform.localScale.y;
 			}
 			leftPressed = true;
 
-			if(initialLen != leftLen)
-				transform.localScale = new Vector3(transform.localScale.x, 
-				                                   Mathf.Lerp (prevLen, leftLen, horizAsymptote((Time.time - leftTimeHeld) * Mathf.Sqrt(leftObj.localPosition.y + leftObj.localPosition.y + 4f) / reduceScale, reduceRate)),
-				                                   transform.localScale.z);
+			if (initialLen != leftLen)
+				transform.localScale = new Vector3 (transform.localScale.x, 
+				                                    Mathf.Lerp (prevLen, leftLen, horizAsymptote ( (Time.time - leftTimeHeld) * Mathf.Sqrt (leftObj.localPosition.y + leftObj.localPosition.y + 4f) / reduceScale, reductionLimit)),
+				                                    transform.localScale.z);
 		}
-		else {
-			if(leftPressed || rightPressed) {
-				timeReleased = Time.time;
-				prevLen = transform.localScale.y;
+		else { // neither left nor right
+			if (leftPressed || rightPressed) {		// L/R had until now been held, so
+				timeReleased = Time.time;			// record the time
+				prevLen = transform.localScale.y;	// and length upon this release
 			}
 
-			leftPressed = rightPressed = false;
+			leftPressed = false;
+			rightPressed = false;
 
-			transform.localScale = new Vector3(transform.localScale.x, 
-			                                   Mathf.Lerp (prevLen, initialLen, (Time.time - timeReleased) * 2f), 
-			                                   transform.localScale.z);
+			transform.localScale = new Vector3 (transform.localScale.x, 
+			                                    Mathf.Lerp (prevLen, initialLen, (Time.time - timeReleased) * returnRate), 
+			                                    transform.localScale.z);
 		}
 
 	}
@@ -77,7 +80,7 @@ public class StringBehavior : MonoBehaviour {
 	//	touchingSurface = false;
 	//}
 
-	float horizAsymptote(float x, float target) {
+	float horizAsymptote (float x, float target) {
 		return (target - target / (x + 1f));
 	}
 

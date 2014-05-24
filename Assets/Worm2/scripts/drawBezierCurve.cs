@@ -51,10 +51,10 @@ public class drawBezierCurve : MonoBehaviour {
 		foreach (Transform seg in segments) {
 			int segID = segments.IndexOf (seg);
 
-			Vector3 pos = curve.Lerp ( (segID + 1f) / numPieces);
+			Vector3 pos = curve.Lerp ( (segID + .5f) / numPieces);
 			Vector3 lookLoc = curve.Lerp ( (segID + .25f) / numPieces);
 			seg.localPosition = pos;
-			seg.LookAt (lookLoc, Vector3.right);
+			seg.LookAt (lookLoc, Vector3.back);
         }
 
 		distanceTraveled = tracked.localPosition.x * transform.localScale.x; //Normalize by scale -- double size objects move twice as much, relative to the scene!

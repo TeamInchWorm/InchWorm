@@ -14,7 +14,7 @@ public class FollowCamera : MonoBehaviour {
 	void Update () {
 
 		transform.position = new Vector3(Mathf.Lerp (transform.position.x, target.position.x, 1f/(smoothingRate + 1f)),
-		                                 Mathf.Lerp (transform.position.y, target.position.y, 1f/(smoothingRate + 1f)), 
+		                                 Mathf.Lerp (transform.position.y, target.position.y+24f, 1f/(smoothingRate + 1f)), 
 		                                 transform.position.z);
 	}
 

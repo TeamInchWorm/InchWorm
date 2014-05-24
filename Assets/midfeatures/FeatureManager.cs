@@ -32,10 +32,12 @@ public class FeatureManager : MonoBehaviour {
 	}
 	
 	private void Recycle () {
+		float baseSize = Random.Range(0f, 2f);
+	
 		Vector3 scale = new Vector3(
-			Random.Range(minSize.x, maxSize.x),
-			Random.Range(minSize.y, maxSize.y),
-			Random.Range(minSize.z, maxSize.z));
+			Random.Range(minSize.x, maxSize.x) + baseSize,
+			Random.Range(minSize.y, maxSize.y) + baseSize,
+			Random.Range(minSize.z, maxSize.z) + baseSize*2f);
 		
 		Vector3 position = nextPosition;
 		position.x += scale.x * 0.5f;
@@ -44,6 +46,7 @@ public class FeatureManager : MonoBehaviour {
 		Transform o = objectQueue.Dequeue();
 		o.localScale = scale;
 		o.localPosition = position;
+		o.Rotate (0f, 0f, Random.Range (0f, 360f));
 		nextPosition.x += scale.x + Random.Range(spaceMin, spaceMax);
 
 		objectQueue.Enqueue(o);

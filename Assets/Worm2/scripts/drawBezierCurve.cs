@@ -34,7 +34,7 @@ public class drawBezierCurve : MonoBehaviour {
 		}
 
 		var AM = AudioManager.Instance;
-		AM.Play(musicTrack, Vector3.zero, .5f);
+		//AM.Play(musicTrack, Vector3.zero, .5f);
     }
 
     List<Vector3> getBezierControlPoints () {
@@ -54,10 +54,10 @@ public class drawBezierCurve : MonoBehaviour {
 		foreach (Transform seg in segments) {
 			int segID = segments.IndexOf (seg);
 
-			Vector3 pos = curve.Lerp ( (segID + .5f) / numPieces);
-			Vector3 lookLoc = curve.Lerp ( (segID + .25f) / numPieces);
+			Vector3 pos = curve.Lerp ( (segID + .5f) / numPieces); // Where the piece should be located
+			Vector3 lookLoc = curve.Lerp ( (segID + .25f) / numPieces); // Where the piece should rotate to face -- slightly further along the curve
 			seg.localPosition = pos;
-			seg.LookAt (lookLoc, Vector3.back);
+			seg.LookAt (lookLoc, Vector3.back); // The second param is the normal -- in a 2D game this should be forward/back into/from the screen
         }
 
 		distanceTraveled = tracked.localPosition.x * transform.localScale.x; //Normalize by scale -- double size objects move twice as much, relative to the scene!

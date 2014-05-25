@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class FeatureManager : MonoBehaviour {
 
-	public Transform prefab;
+	public Transform [] prefab;
 	public int numberOfObjects;
 	public float recycleOffset;
 	public Vector3 startPosition;

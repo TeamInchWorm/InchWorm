@@ -55,6 +55,8 @@
      <Compile Include="Assets\Worm2\scripts\WormTailBehavior.cs" />
      <Compile Include="Assets\Worm2\scripts\drawBezierCurve.cs" />
      <Compile Include="Assets\midfeatures\FeatureManager.cs" />
+     <None Include="Assets\Shaders\temp.shader" />
+     <None Include="Assets\Shaders\Affine_Shader.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,23 +4,26 @@ using System.Collections.Generic;
 
 public class PebbleManager : MonoBehaviour {
 	
-	public Transform prefab;
-	public int numberOfObjects;
+	public Transform [] feature;
+	public int numberOfRocks;
 	public float recycleOffset;
 	public Vector3 startPosition;
 	public Vector3 minSize, maxSize, minGap, maxGap;
-	public float minY, maxY;
+	public Vector3 minPosition, maxPosition;
 	
 	private Vector3 nextPosition;
 	private Queue<Transform> objectQueue;
 	
 	void Start () {
-		objectQueue = new Queue<Transform>(numberOfObjects);
-		for (int i = 0; i < numberOfObjects; i++) {
-			objectQueue.Enqueue((Transform)Instantiate(prefab));
+		objectQueue = new Queue<Transform> (numberOfRocks);
+		for (int i = 0; i < numberOfRocks; i++) {
+			// Add a random one of the feature prefabs to the scene
+			objectQueue.Enqueue ( (Transform)Instantiate (feature [Random.Range (0, feature.Length) ] ) );
 		}
+
 		nextPosition = startPosition;
-		for (int i = 0; i < numberOfObjects; i++) {
+
+		for (int i = 0; i < numberOfRocks; i++) {
 			Recycle();
 		}
 	}
@@ -32,10 +35,11 @@ public class PebbleManager : MonoBehaviour {
 	}
 	
 	private void Recycle () {
-		Vector3 scale = new Vector3(
-			Random.Range(minSize.x, maxSize.x),
-			Random.Range(minSize.y, maxSize.y),
-			Random.Range(minSize.z, maxSize.z));
+		float baseSize = Random.Range (1f, 12f);
+
+		Vector3 scale = new Vector3 (Random.Range (minSize.x, maxSize.x + baseSize * 2f),
+		                             Random.Range (minSize.y, maxSize.y + baseSize),
+		                             Random.Range (minSize.z, maxSize.z + baseSize * 2f) );
 		
 		Vector3 position = nextPosition;
 		position.x += scale.x * 0.5f;
@@ -47,16 +51,26 @@ public class PebbleManager : MonoBehaviour {
 		
 		objectQueue.Enqueue(o);
 
-		nextPosition += new Vector3(
-			Random.Range(minGap.x, maxGap.x) + scale.x,
-			Random.Range(minGap.y, maxGap.y),
-			Random.Range(minGap.z, maxGap.z));
+		nextPosition += new Vector3 (Random.Range (minGap.x, maxGap.x) + scale.x,
+		                             Random.Range (minGap.y, maxGap.y),
+		                             Random.Range (minGap.z, maxGap.z) );
+
 		
-		if(nextPosition.y < minY){
-			nextPosition.y = minY + maxGap.y;
+		o.Rotate (Random.Range (0f, 360f), 0f, 0f);
+
+		//Make sure the relocated objects remain in the acceptable band of Y & Z positions
+		while (nextPosition.y < minPosition.y) {
+			nextPosition.y += 1f;
 		}
-		else if(nextPosition.y > maxY){
-			nextPosition.y = maxY - maxGap.y;
+		while (nextPosition.y > maxPosition.y) {
+			nextPosition.y -= 1f;
+		}
+
+		while (nextPosition.z < minPosition.z) {
+			nextPosition.z += 1f;
+		}
+		while (nextPosition.z > maxPosition.z) {
+			nextPosition.z -= 1f;
 		}
 	}
 }

@@ -49,7 +49,7 @@
      <Compile Include="Assets\Audio\AudioManager.cs" />
      <Compile Include="Assets\Collision\PebbleManager.cs" />
      <Compile Include="Assets\Misc\FollowCamera.cs" />
-     <Compile Include="Assets\Misc\Singleton.cs" />
+     <Compile Include="Assets\Singleton.cs" />
      <Compile Include="Assets\Worm2\scripts\StringBehavior.cs" />
      <Compile Include="Assets\Worm2\scripts\WormHeadBehavior.cs" />
      <Compile Include="Assets\Worm2\scripts\WormTailBehavior.cs" />

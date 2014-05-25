@@ -17,6 +17,8 @@ public class drawBezierCurve : MonoBehaviour {
 
 	private List<Transform> segments = new List<Transform>();
 
+	public AudioClip musicTrack;
+
     void Start () {
         /*line = gameObject.AddComponent<LineRenderer>();
         line.material = new Material(Shader.Find("Particles/Alpha Blended"));
@@ -32,6 +34,7 @@ public class drawBezierCurve : MonoBehaviour {
 		}
 
 		var AM = AudioManager.Instance;
+		AM.Play(musicTrack, Vector3.zero, .5f);
     }
 
     List<Vector3> getBezierControlPoints () {

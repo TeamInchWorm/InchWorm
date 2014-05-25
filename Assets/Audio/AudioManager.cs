@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class AudioManager : Singleton<AudioManager> {
-	class ClipInfo
-	{
+	class ClipInfo {
 		//ClipInfo used to maintain default audio source info
 		public AudioSource source { get; set; }
 		public float defaultVolume { get; set; }
@@ -14,34 +13,34 @@ public class AudioManager : Singleton<AudioManager> {
 
 	// Uses Awake instead of Start so this begins first thing in the scene, in case any audio plays initially - EG music
 	void Awake() { 
-		Debug.Log("AudioManager Initializing");
+		Debug.Log ("AudioManager Initializing");
 		try {
-			transform.parent = GameObject.FindGameObjectWithTag("MainCamera").transform;
-			transform.localPosition = new Vector3(0, 0, 0);
+			transform.parent = GameObject.FindGameObjectWithTag ("MainCamera").transform;
+			transform.localPosition = new Vector3 (0, 0, 0);
 		} catch {
-			Debug.Log("Unable to find main camera to attach audiomanager");
+			Debug.Log ("Unable to find main camera to attach audiomanager");
 		}
 
 		m_activeAudio = new List<ClipInfo>();
 	}
 
-	public AudioSource Play(AudioClip clip, Vector3 soundOrigin, float volume) {
+	public AudioSource Play (AudioClip clip, Vector3 soundOrigin, float volume) {
 		//Create an empty game object
-		GameObject soundLoc = new GameObject("Audio: " + clip.name);
+		GameObject soundLoc = new GameObject ("Audio: " + clip.name);
 		soundLoc.transform.position = soundOrigin;
 		
 		//Create the source
 		AudioSource source = soundLoc.AddComponent<AudioSource>();
-		setSource(ref source, clip, volume);
+		setSource (ref source, clip, volume);
 		source.Play();
-		Destroy(soundLoc, clip.length); //Remove the source object after clip finished playing
+		Destroy (soundLoc, clip.length); //Remove the source object after clip finished playing
 		
 		//Set the source as active
-		m_activeAudio.Add(new ClipInfo {source = source, defaultVolume = volume} );
+		m_activeAudio.Add (new ClipInfo {source = source, defaultVolume = volume} );
 		return source;
 	}
 
-	private void setSource(ref AudioSource source, AudioClip clip, float volume) {
+	private void setSource (ref AudioSource source, AudioClip clip, float volume) {
 		source.rolloffMode = AudioRolloffMode.Logarithmic;
 		source.dopplerLevel = 0.2f;
 		source.minDistance = 150;

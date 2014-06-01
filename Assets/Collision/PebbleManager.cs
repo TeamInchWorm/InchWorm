@@ -35,7 +35,7 @@ public class PebbleManager : MonoBehaviour {
 	}
 	
 	private void Recycle () {
-		float baseSize = Random.Range (1f, 12f);
+		float baseSize = Random.Range (2f, 8f);
 
 		Vector3 scale = new Vector3 (Random.Range (minSize.x, maxSize.x + baseSize * 2f),
 		                             Random.Range (minSize.y, maxSize.y + baseSize),
@@ -51,12 +51,11 @@ public class PebbleManager : MonoBehaviour {
 		
 		objectQueue.Enqueue(o);
 
+		o.Rotate (Random.Range (0f, 360f), 0f, 0f);
+
 		nextPosition += new Vector3 (Random.Range (minGap.x, maxGap.x) + scale.x,
 		                             Random.Range (minGap.y, maxGap.y),
 		                             Random.Range (minGap.z, maxGap.z) );
-
-		
-		o.Rotate (Random.Range (0f, 360f), 0f, 0f);
 
 		//Make sure the relocated objects remain in the acceptable band of Y & Z positions
 		while (nextPosition.y < minPosition.y) {

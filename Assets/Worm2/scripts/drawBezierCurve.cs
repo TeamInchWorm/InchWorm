@@ -32,9 +32,6 @@ public class drawBezierCurve : MonoBehaviour {
 			//newseg.name = "Segment " + p; 
 			segments.Add ( (Transform)Instantiate (segmentPrefab) );
 		}
-
-		var AM = AudioManager.Instance;
-		//AM.Play(musicTrack, Vector3.zero, .5f);
     }
 
     List<Vector3> getBezierControlPoints () {

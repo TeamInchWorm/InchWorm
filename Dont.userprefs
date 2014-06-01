@@ -1,17 +1,19 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Temp\Compiled-Basic.shader">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Effects\Move.cs">
     <Files>
-      <File FileName="Assets\Worm2\scripts\drawBezierCurve.cs" Line="60" Column="116" />
+      <File FileName="Assets\Scripts\Managers\GameEventManager.cs" Line="4" Column="1" />
+      <File FileName="Assets\Worm2\scripts\drawBezierCurve.cs" Line="34" Column="4" />
       <File FileName="Assets\midfeatures\FeatureManager.cs" Line="1" Column="1" />
       <File FileName="Assets\Collision\PebbleManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Worm2\scripts\WormHeadBehavior.cs" Line="1" Column="1" />
       <File FileName="Assets\Worm2\scripts\WormTailBehavior.cs" Line="1" Column="1" />
       <File FileName="Assets\Audio\AudioManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Misc\FollowCamera.cs" Line="1" Column="1" />
       <File FileName="Assets\Worm2\scripts\StringBehavior.cs" Line="1" Column="1" />
-      <File FileName="Temp\Compiled-Affine_Shader.shader" Line="8" Column="2" />
-      <File FileName="Temp\Compiled-Basic.shader" Line="3" Column="54" />
+      <File FileName="Assets\Scripts\Managers\GameEventManager.cs" Line="4" Column="1" />
+      <File FileName="Assets\Scripts\Effects\Move.cs" Line="64" Column="39" />
+      <File FileName="Assets\Scripts\Effects\ColorManipulator.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Managers\SceneViewManager.cs" Line="18" Column="3" />
+      <File FileName="Assets\Scripts\Managers\EffectManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

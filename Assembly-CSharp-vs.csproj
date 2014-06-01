@@ -68,9 +68,6 @@
      <None Include="Assets\Shaders\temp.shader" />
      <None Include="Assets\Shaders\Affine_Shader.shader" />
      <None Include="Assets\UnlitAlpha.shader" />
- <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
- </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

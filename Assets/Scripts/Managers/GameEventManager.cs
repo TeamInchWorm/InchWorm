@@ -4,6 +4,8 @@ using System.Collections;
 public class GameEventManager : MonoBehaviour {
 
 	public static int currentScene = 0;
+	private float gameTime = 0;
+	private float score = 0;
 
 	//Declare generic game event taking no arguments, sets up two basic events
 	public delegate void GameEvent();
@@ -33,6 +35,28 @@ public class GameEventManager : MonoBehaviour {
 	 * actually calls the methods as long as something is subcrsibed (null check)
 	 *
 	 */
+
+	public delegate void TimeEvent(float currentTime);
+	public static event TimeEvent TimeChange;
+
+	public delegate void ScoreEvent(float currentScore);
+	public static event ScoreEvent ScoreChange;
+
+
+	void Start ()
+	{
+		GameStart += ResetCounters;
+		TriggerGameStart();
+	}
+
+	void Update ()
+	{
+		gameTime += Time.deltaTime;
+
+		AnnounceTime();
+		AnnounceScore();
+	}
+
 
 	public static void TriggerGameStart()
 	{
@@ -65,6 +89,34 @@ public class GameEventManager : MonoBehaviour {
 		
 			SceneChange(currentScene);	
 		}
+	}
+
+	private void AnnounceTime ()
+	{
+		if (TimeChange != null)
+		{
+			TimeChange(gameTime);
+        }
+	}
+
+	private void AnnounceScore ()
+	{
+		if (ScoreChange != null)
+		{
+			ScoreChange(score);
+		}
+	}
+
+	public void ChangeScore (float points)
+	{
+		score += points; 
+	}
+
+	private void ResetCounters()
+	{
+		currentScene = 0;
+		score = 0;
+		gameTime = 0;
 	}
 
 	/*

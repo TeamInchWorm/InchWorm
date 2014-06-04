@@ -5,10 +5,12 @@ public class EffectManager : MonoBehaviour {
 	
 	public delegate void FXEvent();
 	public static event FXEvent FXIncrease, FXDecrease, FXZero, FXMax;
+	private float lastScore = 0;
 
 	// Use this for initialization
 	void Start () {
-	
+		GameEventManager.GameStart += TriggerFXZero;
+		GameEventManager.ScoreChange += ScoreHandler;
 	}
 	
 	// Update is called once per frame
@@ -24,7 +26,7 @@ public class EffectManager : MonoBehaviour {
 		}
 	}
 
-	public static void TriggerFXZDecrease()
+	public static void TriggerFXDecrease()
 	{
 		if (FXDecrease != null) {
 			FXDecrease();	
@@ -42,6 +44,19 @@ public class EffectManager : MonoBehaviour {
 	{
 		if (FXZero != null) {
 			FXZero();	
+		}
+	}
+
+	private void ScoreHandler(float newScore)
+	{
+		if (newScore > lastScore)
+		{
+			TriggerFXIncrease();
+		}
+
+		else 
+		{
+			TriggerFXDecrease();
 		}
 	}
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class Move : MonoBehaviour {
+public class MoveCamera : MonoBehaviour {
 
 	public Waypoint[] sceneMovements;
 	public bool cameraJump;
@@ -14,7 +14,7 @@ public class Move : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		GameEventManager.SceneChange += SceneHandler;
+		GameEventManager.SceneChange += SceneHandler; // add SceneHandler method to SceneChange list of follower events
 
 		queuedMovements = new Queue<Waypoint>(sceneMovements.Length);
 
@@ -50,6 +50,7 @@ public class Move : MonoBehaviour {
 	}
 
 	private void SceneHandler(int currentSceneNumber) {
+		// go to next position
 		if (nextScene == currentSceneNumber) {
 			StartNextMovement();
 

@@ -37,6 +37,10 @@ public class AudioManager : Singleton<AudioManager> {
 		
 		//Set the source as active
 		m_activeAudio.Add (new ClipInfo {source = source, defaultVolume = volume} );
+
+		//Triggers the start of the game and resets game time to zero;
+		GameEventManager.TriggerGameStart();
+
 		return source;
 	}
 

@@ -8,6 +8,9 @@ public class SceneViewManager : MonoBehaviour {
 	
 	public Camera mainCamera;
 
+	public AudioClip musicTrack;
+	public float musicVolume;
+
 
 	void Start () {
 		//Registering the movement method with the event manager 

@@ -15,20 +15,22 @@ public class PebbleManager : MonoBehaviour {
 	private Vector3 nextPosition;
 	private Queue<Transform> objectQueue;
 	private bool rocksOn = false;
+	private int counter;
+	private float currentTime;
 	
 	void Start () {
 		//GameEventManager.GameStart += TriggerFXZero;
-		GameEventManager.TimeChange += TriggerRocksOn;
+		GameEventManager.TimeChange += checkTime;
 	}
 	
 	void Update () {
-		if (objectQueue.Peek().localPosition.x + recycleOffset < drawBezierCurve.distanceTraveled) {
+		if (rocksOn && objectQueue.Peek().localPosition.x + recycleOffset < drawBezierCurve.distanceTraveled) {
 			Recycle();
 		}
 	}
 	
 	private void Recycle () {
-		float baseSize = Random.Range (2f, 8f);
+		float baseSize = Random.Range (Mathf.Sqrt(currentTime) / 4f, Mathf.Sqrt(currentTime) / 2f);
 
 		Vector3 scale = new Vector3 (Random.Range (minSize.x, maxSize.x + baseSize * 2f),
 		                             Random.Range (minSize.y, maxSize.y + baseSize),
@@ -44,7 +46,7 @@ public class PebbleManager : MonoBehaviour {
 		
 		objectQueue.Enqueue(o);
 
-		o.Rotate (Random.Range (0f, 360f), 0f, 0f);
+		o.Rotate (0f, 0f, Random.Range (0f, 360f) );
 
 		nextPosition += new Vector3 (Random.Range (minGap.x, maxGap.x) + scale.x,
 		                             Random.Range (minGap.y, maxGap.y),
@@ -66,21 +68,45 @@ public class PebbleManager : MonoBehaviour {
 		}
 	}
 
-	private void TriggerRocksOn (float currentTime) {
-		if (currentTime >= startRocksTime) {
-			rocksOn = true;
+	private void checkTime (float gameTime) {
+		currentTime = gameTime;
 
-			objectQueue = new Queue<Transform> (numberOfRocks);
-			for (int i = 0; i < numberOfRocks; i++) {
-				// Add a random one of the feature prefabs to the scene
-				objectQueue.Enqueue ( (Transform)Instantiate (feature [Random.Range (0, feature.Length) ] ) );
-			}
-			
-			nextPosition = startPosition;
-			
-			for (int i = 0; i < numberOfRocks; i++) {
-				Recycle();
-			}
+		if (!rocksOn && currentTime >= startRocksTime) 
+			EnableRocks();
+
+		/*if (currentTime > numberOfRocks) {
+			numberOfRocks++;
+
+			Transform clone = (Transform) Instantiate (feature [Random.Range (0, feature.Length) ] );
+			clone.parent = transform;
+			objectQueue.Enqueue(clone);
+
+			// Keep adding more rocks over time
+			Vector3 newPos = new Vector3 (startPosition.x - recycleOffset,
+			                      startPosition.y,
+			                      startPosition.z);
+			clone.localPosition = newPos;
+			Recycle ();
+		}*/
+	}
+
+	private void EnableRocks () {
+		rocksOn = true;
+
+		objectQueue = new Queue<Transform> (numberOfRocks);
+		for (int i = 0; i < numberOfRocks; i++) {
+			// Add a random one of the feature prefabs to the scene
+			//objectQueue.Enqueue ( (Transform)Instantiate (feature [Random.Range (0, feature.Length) ] ) );
+
+			Transform clone = (Transform) Instantiate (feature [Random.Range (0, feature.Length) ] );
+			clone.parent = transform;
+			objectQueue.Enqueue(clone);
+		}
+		
+		nextPosition = startPosition;
+		
+		for (int i = 0; i < numberOfRocks; i++) {
+			Recycle();
 		}
 	}
 }

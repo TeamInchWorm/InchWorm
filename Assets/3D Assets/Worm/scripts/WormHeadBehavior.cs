@@ -9,13 +9,13 @@ public class WormHeadBehavior : MonoBehaviour
 	private bool touchingSurface;
 	
 	public Vector2 jumpVelocity;
-	//public Transform opposite;
+	public Transform center;
 	
 	void Update () {
 		if (Input.GetAxis ("Horizontal") > 0) { // Right
-			rigidbody2D.AddForce (jumpVelocity * Time.deltaTime / (transform.localPosition.y + 3f) );
+			rigidbody2D.AddForce (jumpVelocity * Time.deltaTime * Mathf.Pow(2f, (center.localPosition.y - transform.localPosition.y - 2f) ) );
 
-			rigidbody2D.fixedAngle = false; //allow to rotate when lifting head - effectively less friction
+			rigidbody2D.fixedAngle = false; //allow to rotate when lifting head - effectively less friction 
 		}
 		else {
 			rigidbody2D.fixedAngle = true;

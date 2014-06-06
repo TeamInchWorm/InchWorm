@@ -110,6 +110,7 @@ public class GameEventManager : MonoBehaviour {
 	public void ChangeScore (float points)
 	{
 		score += points; 
+		score = Mathf.Clamp(score, 0, 100);
 	}
 
 	private void ResetCounters()

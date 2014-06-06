@@ -6,6 +6,8 @@ public class DistanceTraveled : MonoBehaviour {
 	private float xPos, xLast;
 	private GameEventManager GM;
 
+	public float scoreMultiplier = 1.5f;
+	public float scoreDecrementor = -0.01f;
 
 	// Use this for initialization
 	void Start () {
@@ -21,11 +23,11 @@ public class DistanceTraveled : MonoBehaviour {
 
 		float dist = xPos - xLast;
 
-		if (dist != 0)
-			GM.ChangeScore(dist); 
+		if (dist > 0)
+			GM.ChangeScore(dist * scoreMultiplier); 
+		else if (dist <= 0 && dist >= -0.1)
+			GM.ChangeScore(scoreDecrementor);
 
-		else
-			GM.ChangeScore(-0.1f);			
 	}
 
 

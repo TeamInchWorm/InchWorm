@@ -9,11 +9,11 @@ public class WormTailBehavior : MonoBehaviour
 	private bool touchingSurface;
 	
 	public Vector2 jumpVelocity;
-	//public Transform opposite;
+	public Transform mid;
 
 	void Update () {
 		if (Input.GetAxis ("Horizontal") < 0) { // Left
-			rigidbody2D.AddForce (jumpVelocity * Time.deltaTime / (transform.localPosition.y + 3f) );
+			rigidbody2D.AddForce (jumpVelocity * Time.deltaTime * Mathf.Pow(2f, (mid.localPosition.y - transform.localPosition.y - 2f) ) );
 
 			rigidbody2D.fixedAngle = false; //allow to rotate when lifting tail - effectively less friction
 		}

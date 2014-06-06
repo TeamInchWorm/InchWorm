@@ -7,25 +7,18 @@ public class PebbleManager : MonoBehaviour {
 	public Transform [] feature;
 	public int numberOfRocks;
 	public float recycleOffset;
+	public float startRocksTime;
 	public Vector3 startPosition;
 	public Vector3 minSize, maxSize, minGap, maxGap;
 	public Vector3 minPosition, maxPosition;
 	
 	private Vector3 nextPosition;
 	private Queue<Transform> objectQueue;
+	private bool rocksOn = false;
 	
 	void Start () {
-		objectQueue = new Queue<Transform> (numberOfRocks);
-		for (int i = 0; i < numberOfRocks; i++) {
-			// Add a random one of the feature prefabs to the scene
-			objectQueue.Enqueue ( (Transform)Instantiate (feature [Random.Range (0, feature.Length) ] ) );
-		}
-
-		nextPosition = startPosition;
-
-		for (int i = 0; i < numberOfRocks; i++) {
-			Recycle();
-		}
+		//GameEventManager.GameStart += TriggerFXZero;
+		GameEventManager.TimeChange += TriggerRocksOn;
 	}
 	
 	void Update () {
@@ -70,6 +63,24 @@ public class PebbleManager : MonoBehaviour {
 		}
 		while (nextPosition.z > maxPosition.z) {
 			nextPosition.z -= 1f;
+		}
+	}
+
+	private void TriggerRocksOn (float currentTime) {
+		if (currentTime >= startRocksTime) {
+			rocksOn = true;
+
+			objectQueue = new Queue<Transform> (numberOfRocks);
+			for (int i = 0; i < numberOfRocks; i++) {
+				// Add a random one of the feature prefabs to the scene
+				objectQueue.Enqueue ( (Transform)Instantiate (feature [Random.Range (0, feature.Length) ] ) );
+			}
+			
+			nextPosition = startPosition;
+			
+			for (int i = 0; i < numberOfRocks; i++) {
+				Recycle();
+			}
 		}
 	}
 }

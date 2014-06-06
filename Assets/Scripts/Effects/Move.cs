@@ -3,18 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class MoveCamera : MonoBehaviour {
+public class Move : MonoBehaviour {
 
 	public Waypoint[] sceneMovements;
 	public bool cameraJump;
 	private Queue<Waypoint> queuedMovements;
 	private int test;
-	private int nextScene;
+	private float nextEventTime;
 
 	// Use this for initialization
 	void Start () {
-
-		GameEventManager.SceneChange += SceneHandler; // add SceneHandler method to SceneChange list of follower events
+		GameEventManager.TimeChange += SceneHandler; // add SceneHandler method to TimeChange's list of follower events
 
 		queuedMovements = new Queue<Waypoint>(sceneMovements.Length);
 
@@ -22,7 +21,7 @@ public class MoveCamera : MonoBehaviour {
 			queuedMovements.Enqueue (sceneMovements[i]);
 		}
 		if (queuedMovements.Count > 0)
-			nextScene = queuedMovements.Peek().sceneNumber;
+			nextEventTime = queuedMovements.Peek().timeActivated;
 	}
 
 	public void StartNextMovement() {
@@ -49,13 +48,13 @@ public class MoveCamera : MonoBehaviour {
 		}
 	}
 
-	private void SceneHandler(int currentSceneNumber) {
+	private void SceneHandler(float currentTime) {
 		// go to next position
-		if (nextScene == currentSceneNumber) {
+		if (nextEventTime <= currentTime) {
 			StartNextMovement();
 
 			if (queuedMovements.Count > 0)
-				nextScene = queuedMovements.Peek().sceneNumber;
+				nextEventTime = queuedMovements.Peek().timeActivated;
 		}
 	}
 

@@ -19,7 +19,10 @@ public class FeatureManager : MonoBehaviour {
 		objectQueue = new Queue<Transform> (numberOfObjects);
 		for (int i = 0; i < numberOfObjects; i++) {
 			// Add a random one of the prefab features to the scene
-			objectQueue.Enqueue ( (Transform)Instantiate (feature [Random.Range (0, feature.Length) ] ) );
+			//objectQueue.Enqueue ( (Transform)Instantiate (feature [Random.Range (0, feature.Length) ] ) );
+			Transform clone = (Transform) Instantiate (feature [Random.Range (0, feature.Length) ] );
+			clone.parent = transform;
+			objectQueue.Enqueue(clone);
 		}
 
 		nextPosition = startPosition;

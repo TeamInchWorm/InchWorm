@@ -4,7 +4,7 @@ using System.Collections;
 public class Waypoint : MonoBehaviour {
 
 	internal Vector3 position;
-	public int sceneNumber;
+	public float timeActivated;
 
 	// Use this for initialization
 	void Start () {

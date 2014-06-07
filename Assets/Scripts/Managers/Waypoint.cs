@@ -12,4 +12,8 @@ public class Waypoint : MonoBehaviour {
 		position = transform.position;
 	}
 
+	void Update () {
+		position = transform.position;
+	}
+
 }

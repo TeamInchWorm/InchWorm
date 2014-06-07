@@ -14,6 +14,6 @@ public class TestDist : MonoBehaviour {
 	}
 
 	void ChangeText (float dist) {
-		guiText.text = dist.ToString("0000.0000");
+		guiText.text = dist.ToString("0000.00");
 	}
 }

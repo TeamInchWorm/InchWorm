@@ -15,7 +15,7 @@ public class TestTimecode : MonoBehaviour {
 
 	void ChangeText (float time)
 	{
-		guiText.text = time.ToString("000#.##");
+		guiText.text = time.ToString("00#.##");
 	}
 	
 }

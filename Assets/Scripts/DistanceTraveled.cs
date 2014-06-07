@@ -2,17 +2,19 @@
 using System.Collections;
 
 public class DistanceTraveled : MonoBehaviour {
-
-	private float xPos, xLast;
-	private GameEventManager GM;
-
-	public float scoreMultiplier = 1.5f;
+	
+	public float scoreMultiplier = .0015f;
 	public float scoreDecrementor = -0.01f;
+	
+	private GameEventManager GM;
+	private float xPos, xLast, maxDistReached;
 
 	// Use this for initialization
 	void Start () {
 		GM = GameObject.Find("Game Event Manager").GetComponent<GameEventManager>();
+
 		xPos = transform.position.x;
+		maxDistReached = 0.0f;
 	}
 	
 	// Update is called once per frame
@@ -20,15 +22,18 @@ public class DistanceTraveled : MonoBehaviour {
 
 		xLast = xPos;
 		xPos = transform.position.x;
-
-		print ("xLast: " + xLast + "xPos: " + xPos);
-
+		
 		float dist = xPos - xLast;
+
+		print ("xLast: " + xLast + "  xPos: " + xPos + "  dist: " + dist);
 	
-		if (dist > 0)
+		if (xPos > maxDistReached) {
 			GM.ChangeScore(dist * scoreMultiplier); 
-		else if (dist <= 0 && dist >= -0.1)
-			GM.ChangeScore(scoreDecrementor);
+
+			maxDistReached = xPos;
+		}
+		//else if (dist <= 0 && dist >= -0.1)
+		//	GM.ChangeScore(scoreDecrementor);
 
 	}
 

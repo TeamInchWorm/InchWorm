@@ -15,9 +15,6 @@ public class GameEventManager : MonoBehaviour {
 	//int of the next location it wants to move  to
 	public delegate void SceneEvent(int currentScene);
 	public static event SceneEvent SceneChange; 
-	
-	public AudioClip musicTrack;
-	public float musicVolume; // 0f to 1f (100% volume)
 
 	private float timeElapsed;
 

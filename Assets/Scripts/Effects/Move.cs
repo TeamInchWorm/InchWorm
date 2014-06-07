@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -37,19 +37,14 @@ public class Move : MonoBehaviour {
 
 	//Move an object to a new position
 	IEnumerator MoveTo(Vector3 targetPosition, float transition) {
-		//Initialize a velocity for smooth damp
-		//////////var velocity = Vector3.zero;
 		Vector3 startPosition = transform.position;
 		float startTime = Time.time;
 		float endTime = startTime + transition;
 
 		//While we are not near to the target
 		while((transform.position - targetPosition).sqrMagnitude > 0.01 * 0.01) {
-			//Use smooth damp to move to the new position
-			////////transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, transition);
-
-
-			float currentTime = Time.time/endTime;
+			//Use l'erp to move to the new position
+			float currentTime = (Time.time - startTime)/(endTime - startTime);
 
 			transform.position = Vector3.Lerp(startPosition,targetPosition,currentTime);
 			//Yield until the next frame

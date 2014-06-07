@@ -24,7 +24,7 @@ public class PebbleManager : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (rocksOn && objectQueue.Peek().localPosition.x + recycleOffset < drawBezierCurve.distanceTraveled) {
+		if (rocksOn && (objectQueue.Peek().localPosition.x + recycleOffset < drawBezierCurve.distanceTraveled) ) {
 			Recycle();
 		}
 	}

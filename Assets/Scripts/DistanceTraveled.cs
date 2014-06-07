@@ -21,8 +21,10 @@ public class DistanceTraveled : MonoBehaviour {
 		xLast = xPos;
 		xPos = transform.position.x;
 
-		float dist = xPos - xLast;
+		print ("xLast: " + xLast + "xPos: " + xPos);
 
+		float dist = xPos - xLast;
+	
 		if (dist > 0)
 			GM.ChangeScore(dist * scoreMultiplier); 
 		else if (dist <= 0 && dist >= -0.1)

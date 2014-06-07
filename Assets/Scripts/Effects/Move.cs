@@ -35,24 +35,19 @@ public class Move : MonoBehaviour {
 		}
 	}
 
-	//Move an object to a new position
+	// Move an object to a new position
 	IEnumerator MoveTo(Waypoint targetWaypoint) {
-		//Initialize a velocity for smooth damp
-		//////////var velocity = Vector3.zero;
 		Vector3 startPosition = transform.position;
 		float startTime = Time.time;
 		float endTime = startTime + targetWaypoint.transitionTime;
 
-		//While we are not near to the target
-		while((transform.position - targetWaypoint.position).sqrMagnitude > 0.01 * 0.01) {
-			//Use smooth damp to move to the new position
-			////////transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, transition);
-
-
+		// While we are not near the target
+		while((transform.position - targetWaypoint.position).sqrMagnitude > 0.0001) {
+			// normalize between start time and end time
 			float currentTime = (Time.time - startTime)/(endTime - startTime);
-
+			// Use l'erp to move to the new position
 			transform.position = Vector3.Lerp(startPosition,targetWaypoint.position,currentTime);
-			//Yield until the next frame
+			// Yield until the next frame
 			yield return null;
 		}
 	}

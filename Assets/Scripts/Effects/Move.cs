@@ -7,6 +7,7 @@ public class Move : MonoBehaviour {
 
 	public Waypoint[] sceneMovements;
 	public bool cameraJump;
+
 	private Queue<Waypoint> queuedMovements;
 	private int test;
 	private float nextEventTime;
@@ -20,39 +21,40 @@ public class Move : MonoBehaviour {
 		for (int i = 0; i < sceneMovements.Length; i++) {
 			queuedMovements.Enqueue (sceneMovements[i]);
 		}
+
 		if (queuedMovements.Count > 0)
 			nextEventTime = queuedMovements.Peek().timeActivated;
 	}
 
 	public void StartNextMovement() {
-		if (queuedMovements.Count > 0){
+		if (queuedMovements.Count > 0) {
 			Waypoint nextLocation = queuedMovements.Dequeue();
 
 			if (cameraJump)
-				transform.position = nextLocation.position;
+				transform.position = nextLocation.transform.localPosition;
 			else
-				StartCoroutine(MoveTo (nextLocation));
+				StartCoroutine (MoveTo (nextLocation) );
 		}
 	}
 
 	// Move an object to a new position
-	IEnumerator MoveTo(Waypoint targetWaypoint) {
-		Vector3 startPosition = transform.position;
+	IEnumerator MoveTo (Waypoint targetWaypoint) {
+		Vector3 startPosition = transform.localPosition;
 		float startTime = Time.time;
 		float endTime = startTime + targetWaypoint.transitionTime;
 
 		// While we are not near the target
-		while((transform.position - targetWaypoint.position).sqrMagnitude > 0.0001) {
+		while ( (transform.localPosition - targetWaypoint.transform.localPosition).sqrMagnitude > 0.0001) {
 			// normalize between start time and end time
-			float currentTime = (Time.time - startTime)/(endTime - startTime);
+			float currentTime = (Time.time - startTime) / (endTime - startTime);
 			// Use l'erp to move to the new position
-			transform.position = Vector3.Lerp(startPosition,targetWaypoint.position,currentTime);
+			transform.localPosition = Vector3.Lerp (startPosition, targetWaypoint.transform.localPosition, currentTime);
 			// Yield until the next frame
 			yield return null;
 		}
 	}
 
-	private void SceneHandler(float currentTime) {
+	private void SceneHandler (float currentTime) {
 		// go to next position
 		if (nextEventTime <= currentTime) {
 			StartNextMovement();
